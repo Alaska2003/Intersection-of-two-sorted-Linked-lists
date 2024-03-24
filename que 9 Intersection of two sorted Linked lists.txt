@@ -1,0 +1,74 @@
+class Solution {
+public:
+    Node* findIntersection(Node* head1, Node* head2) {
+        Node* head = NULL;
+        Node* tail = NULL;
+        Node* i = head1;
+        Node* j = head2;
+
+        while (i != NULL && j != NULL) {
+            if (i->data < j->data) {
+                i = i->next;
+            } else if (i->data > j->data) {
+                j = j->next;
+            } else {  // Data is equal, it's an intersection
+                if (head == NULL) {
+                    head = tail = new Node(i->data);
+                } else {
+                    tail->next = new Node(i->data);
+                    tail = tail->next;
+                }
+                i = i->next;
+                j = j->next;
+            }
+        }
+        return head;
+    }
+};
+ 
+
+
+
+Let's dry run the provided code to see how it iterates through the two sorted linked lists and identifies the intersection:
+
+Given two sorted linked lists, we'll walk through the code step by step:
+
+plaintext
+Copy code
+List 1: 1 -> 2 -> 3 -> 4 -> 6 -> NULL
+List 2: 2 -> 4 -> 6 -> 8 -> NULL
+Initialize head, tail, i, and j pointers:
+
+plaintext
+Copy code
+head = NULL
+tail = NULL
+i points to head of List 1 (1)
+j points to head of List 2 (2)
+1st iteration:
+
+i->data (1) < j->data (2), so i moves to the next node.
+2nd iteration:
+
+i->data (2) = j->data (2), so there's an intersection:
+Create a new node with value 2 and update head and tail.
+Move both i and j to the next nodes.
+3rd iteration:
+
+i->data (3) < j->data (4), so i moves to the next node.
+4th iteration:
+
+i->data (4) = j->data (4), so there's an intersection:
+Create a new node with value 4 and update tail.
+Move both i and j to the next nodes.
+5th iteration:
+
+i->data (6) = j->data (6), so there's an intersection:
+Create a new node with value 6 and update tail.
+Move both i and j to the next nodes.
+6th iteration:
+
+i points to NULL (end of List 1) or j points to NULL (end of List 2), so the loop ends.
+Resulting Intersection List: 2 -> 4 -> 6 -> NULL
+
+The function then returns the head of the intersection list.
